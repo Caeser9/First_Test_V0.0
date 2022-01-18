@@ -1,4 +1,4 @@
-package tn.isima.tp1;
+package tn.isima.twitter;
 
 import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.IntWritable;
