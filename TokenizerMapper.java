@@ -13,24 +13,25 @@ public class TokenizerMapper
 
     private final static IntWritable one = new IntWritable(1);
     private Text word = new Text();
+    //private String Influencer;
 
     public void map(Object key, Text value, Mapper.Context context
-    ) 
+    )
             throws IOException, InterruptedException {
         String line = value.toString();
         String[] data = line.split(",");
 
-        String Influencer = null;
         Double Shares = null;
+        String Influencer = null;
         try {
             Influencer = data[0];
-            Shares = Double.parseDouble(data[12]);
+            Shares = Double.parseDouble(data[9]);
 
-            context.write(new Text(Influencer), new DoubleWritable(Shares));
+            context.write (new Text(Influencer), new DoubleWritable(Shares));
+
         } catch (Exception e) {
 
         }
-        System.out.println("Influencer=" + Influencer + "Shares = " + Shares);
+        System.out.println(" Influencer= " + Influencer + " Shares " + Shares);
     }
     }
-}
