@@ -1,4 +1,4 @@
-package tn.isima.tp1;
+package tn.isima.twitter;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
