@@ -29,13 +29,14 @@ public class TokenizerMapper extends Mapper<Object, Text, Text, DoubleWritable>{
         int i=0;
         while (itr.hasMoreTokens()) {
             v=itr.nextToken();
-            if (i==2){
+            if (i==0){
                 Influencer=v.toString();
             }
-            if (i>2 && isNumeric(v.toString())){
-                shares=Double.parseDouble(v.toString()); context.write(new Text(Influencer), new DoubleWritable(shares));
+            if (i>0 && isNumeric(v.toString())){
+                shares=Double.parseDouble(v.toString());
+                context.write(new Text(Influencer), new DoubleWritable(shares));
             }
-            System.out.println("Influencer="+Influencer+"Numero de Shares"+shares);
+            System.out.println("Influencer= "+Influencer+" Numero de Shares= "+shares);
             i++;
         }
     }
