@@ -1,5 +1,6 @@
-package tn.insat.tp1;
+package tn.isima.tp1;
 
+import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
@@ -7,20 +8,21 @@ import org.apache.hadoop.mapreduce.Reducer;
 import java.io.IOException;
 
 public class IntSumReducer
-        extends Reducer<Text,IntWritable,Text,IntWritable> {
+        extends Reducer<Text,DoubleWritable,Text,DoubleWritable> {
 
     private IntWritable result = new IntWritable();
 
-    public void reduce(Text key, Iterable<IntWritable> values,
+    public void reduce(Text key, Iterable<DoubleWritable> values,
                        Context context
     ) throws IOException, InterruptedException {
-        int sum = 0;
-        for (IntWritable val : values) {
-            System.out.println("value: "+val.get());
-            sum += val.get();
+        Double sum = 0.0;
+        Integer count = 0 ;
+        for (DoubleWritable value : values) {
+            sum += value.get();
+            count++;
         }
-        System.out.println("--> Sum = "+sum);
-        result.set(sum);
-        context.write(key, result);
+
+
+        context.write(key, new DoubleWritable(sum));
     }
 }
