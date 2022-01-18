@@ -1,24 +1,25 @@
-package tn.insat.tp1;
+package tn.isima.tp1;
 
-import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.DoubleWritable;
+import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
-import java.util.StringTokenizer;
 
-public class TokenizerMapper
-        extends Mapper<Object, Text, Text, IntWritable>{
+public class TokinizerMapper extends Mapper<LongWritable, Text, Text, DoubleWritable>{
+    @Override
+    public void map(LongWritable key, Text value, Context context)
+        throws IOException, InterruptedException{
+        String line = value.toString();
+        String[] data = line.split(",");
 
-    private final static IntWritable one = new IntWritable(1);
-    private Text word = new Text();
+        try {
+            String Name = data[0];
+            Double Shares = Double.parseDouble(data[9]);
 
-    public void map(Object key, Text value, Mapper.Context context
-    ) throws IOException, InterruptedException {
-        StringTokenizer itr = new StringTokenizer(value.toString());
-        while (itr.hasMoreTokens()) {
-            word.set(itr.nextToken());
-            context.write(word, one);
-        }
+            context.write(new Text(Name), new DoubleWritable(Shares));
+        } catch (Exception e){}
     }
+
 }
