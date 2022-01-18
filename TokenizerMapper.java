@@ -21,17 +21,18 @@ public class TokenizerMapper
         String line = value.toString();
         String[] data = line.split(",");
 
-        Double Shares = null;
-        String Influencer = null;
+        Double Shares = 0.0;
+        String Influencer = "";
+        Double Likes = 0.0;
         try {
             Influencer = data[0];
             Shares = Double.parseDouble(data[9]);
-
+            Likes = Double.parseDouble(data[8]);
             context.write (new Text(Influencer), new DoubleWritable(Shares));
 
         } catch (Exception e) {
 
         }
-        System.out.println(" Influencer= " + Influencer + " Shares " + Shares);
+        System.out.println(" Influencer= " + Influencer + " , Shares " + Shares + ", Likes" + Likes);
     }
     }
