@@ -7,7 +7,7 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 
-public class TokinizerMapper extends Mapper<LongWritable, Text, Text, DoubleWritable>{
+public class TokenizerMapper extends Mapper<LongWritable, Text, Text, DoubleWritable>{
     @Override
     public void map(LongWritable key, Text value, Context context)
         throws IOException, InterruptedException{
