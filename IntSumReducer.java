@@ -7,22 +7,24 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
 
-public class IntSumReducer
-        extends Reducer<Text,DoubleWritable,Text,DoubleWritable> {
+public class IntSumReducer extends Reducer<Text, DoubleWritable, Text, DoubleWritable> {
 
-    private IntWritable result = new IntWritable();
+    //private IntWritable result = new IntWritable();
 
-    public void reduce(Text key, Iterable<DoubleWritable> values,
-                       Context context
-    ) throws IOException, InterruptedException {
-        Double sum = 0.0;
-        Integer count = 0 ;
+    public void reduce(final Text key,
+                       final Iterable<DoubleWritable> values,
+                       final Context context)
+            throws IOException, InterruptedException {
+        int sum = 0;
+        Integer count=0;
         for (DoubleWritable value : values) {
+            //System.out.println("value: "+value.get());
             sum += value.get();
             count++;
         }
-
-
+        //System.out.println("--> Sum = "+sum);
+        //result.set(sum);
         context.write(key, new DoubleWritable(sum));
+
     }
 }
