@@ -1,43 +1,36 @@
 package tn.isima.tp1;
 
 import org.apache.hadoop.io.DoubleWritable;
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-public class TokenizerMapper extends Mapper<Object, Text, Text, DoubleWritable>{
-    public static boolean isNumeric(String string) {
-        Double intValue;
-        System.out.println(String.format("Parsing string: \"%s\"", string));
-        if(string == null || string.equals("")) { System.out.println("String cannot be parsed, it is null or empty.");
-            return false; }
-        try {
-            intValue = Double.parseDouble(string); return true;
-        } catch (NumberFormatException e) { System.out.println("Input String cannot be parsed to Integer.");
-        } return false;
-    }
+public class TokenizerMapper
+        extends Mapper<Object, Text, Text, IntWritable>{
+
+    private final static IntWritable one = new IntWritable(1);
     private Text word = new Text();
-    public void map(Object key, Text value, Mapper.Context context )
+
+    public void map(Object key, Text value, Mapper.Context context
+    ) 
             throws IOException, InterruptedException {
-        String s1=value.toString().toString().trim().replaceAll(" ,", "\t");
-        System.out.println("s1="+s1); StringTokenizer itr = new StringTokenizer(s1);
-        String Influencer="";
-        String v="";
-        Double shares=0.0;
-        int i=0;
-        while (itr.hasMoreTokens()) {
-            v=itr.nextToken();
-            if (i==0){
-                Influencer=v.toString();
-            }
-            if (i>0 && isNumeric(v.toString())){
-                shares=Double.parseDouble(v.toString());
-                context.write(new Text(Influencer), new DoubleWritable(shares));
-            }
-            System.out.println("Influencer= "+Influencer+" Numero de Shares= "+shares);
-            i++;
+        String line = value.toString();
+        String[] data = line.split(",");
+
+        String Influencer = null;
+        Double Shares = null;
+        try {
+            Influencer = data[0];
+            Shares = Double.parseDouble(data[12]);
+
+            context.write(new Text(Influencer), new DoubleWritable(Shares));
+        } catch (Exception e) {
+
         }
+        System.out.println("Influencer=" + Influencer + "Shares = " + Shares);
+    }
     }
 }
