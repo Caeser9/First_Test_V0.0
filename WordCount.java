@@ -1,4 +1,4 @@
-package tn.insat.tp1;
+package tn.isima.tp1;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
